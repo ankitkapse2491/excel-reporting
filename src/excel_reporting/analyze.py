@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import cast
 
 import pandas as pd
 
@@ -78,7 +77,8 @@ def _agg(frame: pd.DataFrame, key: str, metrics: list[str]) -> pd.DataFrame:
         out[f"{m}_mean"] = grp[m].mean()
     out = out.reset_index()
     out[key] = out[key].astype(str)
-    return cast(pd.DataFrame, out)
+    result: pd.DataFrame = out
+    return result
 
 
 def _group_table(
@@ -93,4 +93,5 @@ def _group_table(
             table = _agg(df.assign(**{key: relabeled}), key, metrics)
     sort_col = f"{metrics[0]}_sum" if metrics else "count"
     table = table.sort_values(sort_col, ascending=False)
-    return cast(pd.DataFrame, table.head(top_n).reset_index(drop=True))
+    top: pd.DataFrame = table.head(top_n).reset_index(drop=True)
+    return top

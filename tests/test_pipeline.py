@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import UTC
 from pathlib import Path
 
 import openpyxl
@@ -39,14 +40,14 @@ def test_dry_run_writes_nothing(app_config):
 
 def test_formula_injection_neutralised(tmp_path: Path, app_config):
     # Build a context via the pipeline pieces, then write a hostile string through the writer.
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     from excel_reporting.analyze import Analysis
     from excel_reporting.clean import CleaningStats
     from excel_reporting.reports.context import ReportContext
 
     ctx = ReportContext(
-        title="t", classification="X", generated_at=datetime.now(timezone.utc),
+        title="t", classification="X", generated_at=datetime.now(UTC),
         source_name="s.csv", source_sha256="0" * 64,
         analysis=Analysis(overview={"Rows": 1}, metrics=[]),
         cleaning=CleaningStats(), pii_columns=[], pii_action="mask", charts={},

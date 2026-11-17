@@ -58,6 +58,6 @@ pytest --cov          # tests
 ruff check . && mypy src && bandit -r src -ll
 ```
 
-CI (`.github/workflows/ci.yml`) runs lint, types, tests on Python 3.10/3.12/3.13, SAST, `pip-audit`, SBOM generation and secret scanning.
+CI (`.github/workflows/ci.yml`) runs lint, types, tests on Python 3.11/3.12/3.13, SAST, `pip-audit`, SBOM generation and secret scanning.
 
 See [SECURITY.md](SECURITY.md) and [docs/COMPLIANCE.md](docs/COMPLIANCE.md).

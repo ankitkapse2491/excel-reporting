@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from . import pii
@@ -60,7 +60,7 @@ def run(cfg: AppConfig, dry_run: bool = False) -> RunResult:
         if analysis.metrics:
             charts[f"Distribution of {analysis.metrics[0]}"] = build_histogram(df, analysis.metrics[0])
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         data = None
         if cfg.report.include_data_sheet:
             data = df.head(cfg.report.data_sheet_max_rows)

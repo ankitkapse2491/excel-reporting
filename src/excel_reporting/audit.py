@@ -12,7 +12,7 @@ import hashlib
 import json
 import os
 import platform
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -55,7 +55,7 @@ class AuditLog:
         self._seq += 1
         body = {
             "seq": self._seq,
-            "ts": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
+            "ts": datetime.now(UTC).isoformat(timespec="milliseconds"),
             "run_id": self.run_id,
             "actor": _actor(),
             "host": platform.node(),

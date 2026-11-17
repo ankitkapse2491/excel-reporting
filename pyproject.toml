@@ -7,7 +7,7 @@ name = "excel-reporting"
 version = "1.0.0"
 description = "Secure, auditable automated reporting from Excel/CSV files (cleaning, PII protection, charts, XLSX/PDF/HTML reports)."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "Proprietary" }
 dependencies = [
     "pandas>=2.2,<3",
@@ -51,7 +51,7 @@ fail_under = 80
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 src = ["src", "tests"]
 
 [tool.ruff.lint]
@@ -63,7 +63,7 @@ ignore = ["S101", "E501"]
 "scripts/*" = ["S"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
 ignore_missing_imports = true
 plugins = ["pydantic.mypy"]
