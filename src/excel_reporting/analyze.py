@@ -22,6 +22,7 @@ class Analysis:
     trend: pd.DataFrame | None = None
     describe: pd.DataFrame | None = None
     date_column: str | None = None
+    totals: dict[str, float] = field(default_factory=dict)
 
 
 def _resolve(name: str, df: pd.DataFrame, what: str) -> str:
@@ -55,6 +56,7 @@ def analyze(df: pd.DataFrame, cfg: ReportConfig) -> Analysis:
         overview["Date range"] = f"{df[date_col].min():%Y-%m-%d} to {df[date_col].max():%Y-%m-%d}"
 
     result = Analysis(overview=overview, metrics=metrics, date_column=date_col)
+    result.totals = {m: float(df[m].sum()) for m in metrics}
     for g in groups:
         result.group_tables[g] = _group_table(df, g, metrics, cfg.top_n, cfg.min_group_size)
     if metrics:

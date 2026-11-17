@@ -24,7 +24,11 @@ def test_end_to_end_all_formats(app_config, tmp_path: Path):
     assert "user1@example.com" not in html
 
     wb = openpyxl.load_workbook(next(p for p in res.outputs if p.suffix == ".xlsx"))
-    assert {"Summary", "By region", "By product", "Trend"} <= set(wb.sheetnames)
+    assert {"Summary", "Dashboard", "By region", "By product", "Trend"} <= set(wb.sheetnames)
+    assert wb.sheetnames.index("Dashboard") == 1
+    kinds = {type(c).__name__ for c in wb["Dashboard"]._charts}
+    assert len(wb["Dashboard"]._charts) == 5
+    assert {"BarChart", "DoughnutChart", "LineChart", "AreaChart"} <= kinds
     assert "Data" not in wb.sheetnames  # data minimisation default
     assert wb["By region"]._charts  # native chart present
 
