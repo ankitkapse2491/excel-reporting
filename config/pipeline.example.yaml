@@ -1,0 +1,40 @@
+# Example pipeline configuration. Copy to config/pipeline.yaml (git-ignored) and adapt.
+# Secrets (e.g. the PII hashing key) are NEVER stored here - use environment variables.
+input:
+  path: data/input/sales.csv
+  allowed_root: data/input          # input must resolve inside this directory
+  max_file_mb: 50
+  max_rows: 1000000
+
+cleaning:
+  normalize_columns: true           # "Order Date" -> order_date
+  strip_strings: true
+  drop_empty_rows: true
+  drop_duplicates: true
+  date_columns: [order_date]
+  numeric_columns: [quantity, unit_price, revenue]
+  missing_numeric: median           # none | zero | median | mean | drop
+  missing_text: Unknown
+
+pii:
+  enabled: true
+  action: mask                      # mask | hash (needs REPORT_PII_SALT) | drop
+  auto_detect: true
+  columns: []                       # add explicit columns the detector might miss
+
+report:
+  title: Monthly Sales Report
+  output_dir: data/output
+  formats: [xlsx, pdf, html]
+  group_by: [region, product]
+  metrics: [revenue, quantity]
+  date_column: order_date
+  top_n: 10
+  min_group_size: 1                 # set >=5 for health/sensitive data (small-cell suppression)
+  include_data_sheet: false         # keep false unless row-level data is required
+  classification: INTERNAL
+
+audit:
+  path: data/audit/audit.jsonl
+
+log_level: INFO

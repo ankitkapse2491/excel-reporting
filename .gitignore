@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Data, outputs and secrets must never be committed
+data/
+config/pipeline.yaml
+config/*.local.yaml
+.env
+.env.*
+*.pem
+*.key
+audit/
