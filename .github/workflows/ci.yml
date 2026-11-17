@@ -33,5 +33,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: { name: sbom, path: sbom.json }
       - name: Secret scanning
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
